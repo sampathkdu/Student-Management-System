@@ -1,16 +1,17 @@
 package com.example.CRUD_application.service.impl;
 import com.example.CRUD_application.model.Student;
-import com.example.CRUD_application.repository.StudentRepsitory;
+import com.example.CRUD_application.repository.StudentRepository;
 import com.example.CRUD_application.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 @Service
 public class StudentServiceImpl implements StudentService {
     @Autowired
-    private StudentRepsitory studentRepsitory;
+    private StudentRepository studentRepsitory;
 
     //save student in database
     @Override
@@ -62,5 +63,25 @@ public class StudentServiceImpl implements StudentService {
     studentRepsitory.deleteById(id);
     }
    
+    //retrive student by year of Enrollment
+    @Override
+    public List<Student> getStudentsByYearOfEnrollment(String yearOfEnrollment) {
+    return studentRepsitory.findByYearOfEnrollment(yearOfEnrollment);
+    }
+
+    //retrive student department by id
+    @Override
+    public String getDepartmentByStudentId(long id) {
+    return studentRepsitory.findDepartmentByStudentId(id);
+    }
+
+    //Delete Student By YearOfEnrollment
+    @Override
+    @Transactional
+    public void deleteStudentsByYearOfEnrollment(String yearOfEnrollment) {
+    studentRepsitory.deleteByYearOfEnrollment(yearOfEnrollment);
+    }
+
+
 
 }
